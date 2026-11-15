@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<title>BCC SAFE — GUARD</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--red:#c8102e;--dark:#17191f;--muted:#707784;--bg:#f4f5f7;--card:#fff;--line:#e7e9ee;--green:#16834b;--amber:#a96500;--danger:#c52235}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--dark)}
+header{background:linear-gradient(135deg,#b50926,#e21b3c);color:white;padding:22px 18px 25px;border-radius:0 0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between}.brand{font-weight:850;font-size:20px;letter-spacing:.3px}.pill{font-size:11px;background:#ffffff25;border:1px solid #ffffff55;border-radius:30px;padding:6px 9px}
+h1{font-size:27px;margin:23px 0 5px}header p{margin:0;color:#ffe7eb;font-size:13px;line-height:1.45}
+main{max-width:760px;margin:auto;padding:16px 14px 100px}
+.tabs{display:flex;gap:8px;overflow:auto;margin:2px 0 15px}.tab{border:0;border-radius:12px;padding:11px 14px;background:#e8e9ed;color:#3c424d;font-weight:700;white-space:nowrap}.tab.active{background:var(--dark);color:white}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 3px 12px #11100008}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.muted{color:var(--muted);font-size:13px;line-height:1.45}.small{font-size:11px;color:var(--muted)}h2{font-size:18px;margin:0 0 8px}h3{font-size:15px;margin:0 0 7px}
+.stat{font-size:25px;font-weight:850}.icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#fff0f2;font-size:21px}
+.btn{width:100%;border:0;border-radius:13px;background:var(--red);color:#fff;padding:14px;font-size:15px;font-weight:800;margin-top:10px}.btn.secondary{background:#20232b}.btn.light{background:#f2f3f6;color:#252a33}.btn:disabled{opacity:.45}
+label{display:block;font-size:13px;font-weight:700;margin:13px 0 6px}input,textarea,select{width:100%;padding:13px;border:1px solid #dfe2e8;border-radius:12px;background:#fff;font:inherit;font-size:14px}textarea{min-height:112px;resize:vertical}
+.notice{padding:12px;border-radius:12px;background:#fff7e8;color:#784b08;font-size:12px;line-height:1.45;margin-top:12px}
+.result{border-radius:15px;padding:15px;margin-top:14px;border:1px solid var(--line)}.result.low{background:#effaf3;border-color:#c9ebd5}.result.medium{background:#fff8e9;border-color:#f3dfb5}.result.high{background:#fff0f1;border-color:#f0c6cc}
+.score{font-size:30px;font-weight:900}.tag{border-radius:30px;padding:5px 9px;font-size:11px;font-weight:800}.green{background:#d9f3e2;color:#12683a}.yellow{background:#ffedc4;color:#855100}.red{background:#ffdce0;color:#a31527}
+.item{padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.hidden{display:none!important}.switchline{display:flex;align-items:center;gap:10px;margin:12px 0}.switchline input{width:auto}
+nav{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:30px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));font-size:11px;color:#626875}
+nav span{display:grid;justify-items:center;gap:3px}nav b{font-size:19px;color:var(--red)}
+footer{text-align:center;color:#9298a3;font-size:10px;padding:20px}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="brand">🛡 BCC SAFE</div><div class="pill">INDEPENDENT DEMO • GUARD</div></div>
+ <h1>Защита от мошенников</h1>
+ <p>Проверка подозрительных звонков, сообщений и переводов до того, как пользователь отправит деньги.</p>
+</header>
+<main>
+ <div class="tabs">
+  <button class="tab active" data-tab="home">Обзор</button>
+  <button class="tab" data-tab="check">Проверить звонок / SMS</button>
+  <button class="tab" data-tab="transfer">Защита переводов</button>
+  <button class="tab" data-tab="history">Журнал</button>
+ </div>
+
+ <section id="home">
+  <div class="card">
+   <div class="row"><div><div class="muted">Статус демонстрационной защиты</div><div class="stat" style="color:var(--green)">GUARD включён</div><div class="small">Анализ доступных пользователю данных</div></div><div class="icon">🛡️</div></div>
+  </div>
+  <div class="row">
+   <div class="card" style="flex:1"><div class="muted">Проверено</div><div class="stat" id="checkedCount">0</div></div>
+   <div class="card" style="flex:1"><div class="muted">Опасных сигналов</div><div class="stat" id="dangerCount" style="color:var(--danger)">0</div></div>
+  </div>
+  <div class="card">
+   <h2>Что умеет GUARD</h2>
+   <div class="item">📞 <b>Проверка звонка</b><div class="muted">Анализ номера и слов из разговора, если пользователь сам вводит описание или расшифровку.</div></div>
+   <div class="item">💬 <b>Проверка SMS и чатов</b><div class="muted">Поиск просьб назвать код, перейти по ссылке или срочно перевести деньги.</div></div>
+   <div class="item">💳 <b>Защита перевода</b><div class="muted">Демо-приостановка подозрительного перевода до дополнительной проверки.</div></div>
+  </div>
+  <div class="notice"><b>Важно:</b> это прототип. Он не прослушивает звонки, не читает сообщения автоматически и не подключён к банку. Не вводите настоящие банковские данные, пароли или SMS-коды.</div>
+  <button class="btn" onclick="showTab('check')">Проверить подозрительное сообщение</button>
+ </section>
+
+ <section id="check" class="hidden">
+  <div class="card">
+   <h2>Проверка звонка или сообщения</h2>
+   <p class="muted">Вставьте текст SMS/чата или своими словами опишите разговор. Не вставляйте пароли, коды подтверждения и номера карт.</p>
+   <label>Тип обращения</label>
+   <select id="kind"><option value="sms">SMS / мессенджер</option><option value="call">Телефонный звонок</option></select>
+   <label>Номер или имя отправителя (необязательно)</label>
+   <input id="sender" placeholder="Например: неизвестный номер">
+   <label>Текст сообщения или описание разговора</label>
+   <textarea id="message" placeholder="Например: Представились сотрудником банка, сказали, что счёт под угрозой, попросили назвать код из SMS..."></textarea>
+   <button class="btn" onclick="analyze()">Проверить подозрительные признаки</button>
+   <div id="analysisResult"></div>
+  </div>
+  <div class="notice">Анализ выполняется локально по набору признаков и ключевых фраз. Это демонстрационная эвристика, а не сертифицированная банковская AI-модель.</div>
+ </section>
+
+ <section id="transfer" class="hidden">
+  <div class="card">
+   <h2>Защита переводов</h2>
+   <p class="muted">Проверка тестового перевода. Используйте только вымышленные данные.</p>
+   <label>Сумма, ₸</label><input id="amount" type="number" min="1" placeholder="Например: 150000">
+   <label>Получатель</label><select id="recipient"><option value="known">Знакомый получатель</option><option value="new">Новый получатель</option></select>
+   <label>Устройство</label><select id="device"><option value="known">Обычное устройство</option><option value="new">Новое устройство</option></select>
+   <label>Ситуация</label><select id="pressure"><option value="no">Никто не торопит переводить</option><option value="yes">Звонящий торопит и требует срочно перевести деньги</option></select>
+   <button class="btn" onclick="checkTransfer()">Проверить перевод</button>
+   <div id="transferResult"></div>
+  </div>
+  <div class="card">
+   <h3>Демо-защитное действие</h3>
+   <p class="muted">При высоком риске прототип приостановит только демонстрационную операцию. Реальная карта или банковский счёт не затрагиваются.</p>
+   <div class="row"><b>Статус перевода</b><span id="transferStatus" class="tag green">Нет активной операции</span></div>
+  </div>
+ </section>
+
+ <section id="history" class="hidden">
+  <div class="card"><div class="row"><h2>Журнал проверок</h2><button class="tab" onclick="clearHistory()">Очистить</button></div><div id="historyList" class="muted">Пока проверок нет.</div></div>
+ </section>
+ <footer>BCC SAFE — независимый учебный прототип. Не является официальным приложением Bank CenterCredit.</footer>
+</main>
+<nav><span onclick="showTab('home')"><b>⌂</b>Обзор</span><span onclick="showTab('check')"><b>◉</b>Проверка</span><span onclick="showTab('transfer')"><b>⇄</b>Переводы</span><span onclick="showTab('history')"><b>▤</b>Журнал</span></nav>
+<script>
+let historyItems = JSON.parse(localStorage.getItem('guardHistory')||'[]');
+let activeTransfer = false;
+const phrases = [
+ {w:['код из sms','код из смс','назовите код','сообщите код','одноразовый код','cvv','cvc','пин-код','pin-код'],s:42,n:'Просят сообщить секретный код или данные карты'},
+ {w:['переведите деньги','перевести деньги','безопасный счет','безопасный счёт','резервный счет','резервный счёт'],s:38,n:'Просят перевести деньги на якобы безопасный счёт'},
+ {w:['срочно','немедленно','прямо сейчас','в течение 5 минут','иначе заблокируем'],s:18,n:'Создают искусственную срочность или пугают блокировкой'},
+ {w:['установите приложение','скачайте приложение','перейдите по ссылке','удаленный доступ','удалённый доступ','anydesk','rustdesk'],s:30,n:'Просят установить приложение или дать удалённый доступ'},
+ {w:['назовите пароль','сообщите пароль','логин и пароль','данные карты'],s:38,n:'Запрашивают конфиденциальные данные'},
+ {w:['мы из службы безопасности','служба безопасности банка','сотрудник банка','ваш счет взломан','ваш счёт взломан'],s:12,n:'Используют легенду о сотруднике банка или угрозе счёту'}
+];
+function showTab(id){document.querySelectorAll('main section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tab[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));}
+document.querySelectorAll('.tab[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+function addHistory(type,score,level,details){historyItems.unshift({type,score,level,details,time:new Date().toLocaleString('ru-RU')});historyItems=historyItems.slice(0,40);localStorage.setItem('guardHistory',JSON.stringify(historyItems));render();}
+function render(){document.getElementById('checkedCount').textContent=historyItems.length;document.getElementById('dangerCount').textContent=historyItems.filter(x=>x.level==='Высокий').length;let el=document.getElementById('historyList');el.innerHTML=historyItems.length?historyItems.map(x=>`<div class="item"><div class="row"><b>${esc(x.type)}</b><span class="tag ${x.level==='Высокий'?'red':x.level==='Средний'?'yellow':'green'}">${x.level} риск • ${x.score}/100</span></div><div class="muted">${esc(x.details)}</div><div class="small">${esc(x.time)}</div></div>`).join(''):'Пока проверок нет.';}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function analyze(){let txt=(document.getElementById('message').value||'').toLowerCase();let sender=(document.getElementById('sender').value||'').toLowerCase();if(!txt.trim()){alert('Добавьте текст сообщения или описание звонка.');return;}let score=0,found=[];phrases.forEach(p=>{if(p.w.some(w=>txt.includes(w))){score+=p.s;found.push(p.n)}});if(/^\+?\d[\d\s()-]{5,}$/.test(sender.trim())){score+=4;found.push('Отправитель указан как номер телефона — сам по себе это не доказывает мошенничество');}score=Math.min(100,score);let level=score>=55?'Высокий':score>=25?'Средний':'Низкий';let cls=level==='Высокий'?'high':level==='Средний'?'medium':'low';let advice=level==='Высокий'?'Не сообщайте коды и не переводите деньги. Завершите разговор и самостоятельно свяжитесь с банком по номеру из официального приложения или с карты.':level==='Средний'?'Не переходите по ссылкам. Проверьте информацию через официальный номер банка.':'Явных опасных фраз не найдено. Это не гарантирует безопасность — сохраняйте осторожность.';document.getElementById('analysisResult').innerHTML=`<div class="result ${cls}"><div class="row"><div><div class="muted">Оценка риска</div><div class="score">${score}/100</div></div><span class="tag ${level==='Высокий'?'red':level==='Средний'?'yellow':'green'}">${level} риск</span></div><h3 style="margin-top:12px">Что обнаружено</h3><ul>${(found.length?found:['Совпадений с известными опасными фразами не обнаружено']).map(x=>`<li>${esc(x)}</li>`).join('')}</ul><b>Рекомендация</b><p class="muted">${advice}</p></div>`;addHistory(document.getElementById('kind').value==='call'?'Звонок':'SMS / сообщение',score,level,found.join('; ')||'Подозрительные фразы не найдены');}
+function checkTransfer(){let amount=Number(document.getElementById('amount').value||0);if(amount<=0){alert('Введите сумму для тестового перевода.');return;}let score=0,reasons=[];if(amount>=300000){score+=25;reasons.push('Сумма выше заданного демонстрационного порога');}if(document.getElementById('recipient').value==='new'){score+=25;reasons.push('Новый получатель');}if(document.getElementById('device').value==='new'){score+=30;reasons.push('Новое устройство');}if(document.getElementById('pressure').value==='yes'){score+=40;reasons.push('Пользователя торопят по телефону');}score=Math.min(100,score);let level=score>=55?'Высокий':score>=25?'Средний':'Низкий';let cls=level==='Высокий'?'high':level==='Средний'?'medium':'low';activeTransfer=level==='Высокий';document.getElementById('transferStatus').textContent=activeTransfer?'ДЕМО: перевод приостановлен':'Демо: ограничение не требуется';document.getElementById('transferStatus').className='tag '+(activeTransfer?'red':'green');document.getElementById('transferResult').innerHTML=`<div class="result ${cls}"><div class="row"><div><div class="muted">Риск операции</div><div class="score">${score}/100</div></div><span class="tag ${level==='Высокий'?'red':level==='Средний'?'yellow':'green'}">${level}</span></div><p class="muted">${reasons.length?reasons.map(esc).join('<br>'):'Подозрительных факторов по выбранным параметрам не найдено.'}</p><b>${activeTransfer?'Операция приостановлена в демонстрации. Для продолжения нужна независимая проверка пользователя.':'Демонстрационная проверка завершена.'}</b></div>`;addHistory('Тестовый перевод',score,level,reasons.join('; ')||'Без дополнительных признаков');}
+function clearHistory(){if(confirm('Очистить журнал проверок на этом устройстве?')){historyItems=[];localStorage.removeItem('guardHistory');render();}}
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
